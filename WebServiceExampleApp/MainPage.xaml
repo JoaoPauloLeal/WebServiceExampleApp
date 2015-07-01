@@ -1,0 +1,94 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="WebServiceExampleApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources >
+        <converter:DateConverter xmlns:converter="clr-namespace:WebServiceExampleApp" x:Key="DateConverter"></converter:DateConverter>
+    </phone:PhoneApplicationPage.Resources>
+
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:SlideTransition Mode="SlideDownFadeOut" />
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:SlideTransition Mode="SlideDownFadeOut" />
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="/Resources/dsc_0426.jpg"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="INFO CLIMA" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0" Foreground="Black" FontFamily="Segoe WP Semibold"/>
+
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <StackPanel>
+                <StackPanel>
+                    <TextBlock Foreground="Black" FontFamily="Segoe WP Semibold" FontSize="24">Entre com o CEP ou Nome de Sua Cidade</TextBlock>
+                    <TextBox Name="txtPincode"></TextBox>
+                    <Button Name="btnGetData" Content="Procurar" Click="btnGetData_Click" Margin="0,0,10,0" Foreground="#FF060000" BorderBrush="#FF090006" />
+                </StackPanel>
+                <ProgressBar IsIndeterminate="true" Visibility="Collapsed" Name="pbWeather" />
+                <StackPanel Name="spWeatherInfo">
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Margin="4" Name="txtCity" Text="{Binding city.name }" Style="{StaticResource PhoneTextNormalStyle}" FontSize="30" Foreground="Black" />
+
+                        <TextBlock Margin="4" Text="{Binding city.country}" Style="{StaticResource PhoneTextNormalStyle}" FontSize="25" Foreground="Black" />
+                    </StackPanel>
+                    <StackPanel>
+                        <ListBox ItemsSource="{Binding list}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="8" >
+                                        <StackPanel Orientation="Horizontal" Margin="2">
+                                            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Path=dt, Converter={StaticResource DateConverter}}"  Margin="2" FontSize="25" Foreground="Black" />
+                                            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding weather[0].description}" Margin="2" FontSize="25" Foreground="Black" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="2">
+                                            <TextBlock Margin="2">Min Temp</TextBlock>
+                                            <TextBlock Margin="2" Text="{Binding temp.min}" FontSize="20" />
+                                            <TextBlock Margin="2">Max Temp</TextBlock>
+                                            <TextBlock Margin="2" Text="{Binding temp.max}" FontSize="20" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+
+</phone:PhoneApplicationPage>

@@ -1,0 +1,89 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="WebServiceExampleApp.NoticiasClima"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:SlideTransition Mode="SlideUpFadeIn" />
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:SlideTransition Mode="SlideUpFadeIn" />
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="/Resources/dsc_0426.jpg"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="INFO CLIMA" Style="{StaticResource PhoneTextNormalStyle}" Foreground="Black" FontFamily="Segoe WP Semibold"/>
+            <TextBlock Text="Noticias Clima" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="Black"/>
+        </StackPanel>
+
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+
+            <Button Content="Carregar Noticias" Height="72" HorizontalAlignment="Left" Margin="9,6,0,0" Name="loadFeedButton" VerticalAlignment="Top" Width="273" Click="loadFeedButton_Click" Foreground="#FF170000" BorderBrush="Black" />
+            <ProgressBar IsIndeterminate="true" Visibility="Collapsed" Name="progress" />
+            <ListBox Name="feedListBox" Height="468" HorizontalAlignment="Left" Margin="20,100,0,0" VerticalAlignment="Top" Width="444" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="feedListBox_SelectionChanged" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel VerticalAlignment="Top">
+
+
+                            <TextBlock Text="{Binding title}" FontSize="25" Foreground="Black"/>
+                            <TextBlock Text="{Binding link}" FontStyle="Italic"/>
+                            <TextBlock Text="{Binding description}" FontFamily="Segoe WP Semibold" />
+
+
+
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Border BorderBrush="{StaticResource PhoneSubtleBrush}" BorderThickness="1" Height="2" HorizontalAlignment="Left" Margin="20,88,0,0" Name="border1" VerticalAlignment="Top" Width="438" />
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsMenuEnabled="True" IsVisible="True">
+
+            <shell:ApplicationBarIconButton IconUri="/Icons/save.png" 
+                                            Text="Salvar"
+                                            Click="appBarSave_Click"/>
+
+            <shell:ApplicationBarIconButton IconUri="/Icons/favs.png"
+                                            Text="Favoritos"
+                                            Click="appBarFav_Click"/>
+
+            <shell:ApplicationBarIconButton IconUri="/Icons/questionmark.png"
+                                            Text="Sobre"
+                                            Click="appBarquestionmark_Click"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>
